@@ -1,58 +1,197 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 UGC Challenge
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto foi desenvolvido como parte de um **desafio técnico de avaliação para vaga de desenvolvimento**, com foco em demonstrar habilidades em arquitetura de software, organização de código, boas práticas e escalabilidade.
 
-## About Laravel
+O objetivo principal não é apenas entregar uma solução funcional, mas sim demonstrar um **código limpo, modular, testável e de fácil manutenção**, simulando um ambiente real de produção.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📌 Sobre o Projeto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+O sistema consiste em uma aplicação web para processamento e geração de respostas baseadas em formulários enviados pelo usuário.
 
-## Learning Laravel
+A proposta central é simular um fluxo onde dados estruturados são enviados ao backend e processados por uma camada de negócio, retornando uma resposta gerada dinamicamente e contextualizada.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Este tipo de abordagem pode ser aplicado em cenários reais como:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Geração de respostas automatizadas para leads
+- Assistentes inteligentes para negócios
+- Sistemas de recomendação baseados em input estruturado
+- Automação de comunicação com clientes
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## 🧠 Arquitetura e Organização do Projeto
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+O projeto foi desenvolvido seguindo princípios inspirados em **Clean Architecture**, com uma separação clara de responsabilidades entre as camadas da aplicação.
 
-```bash
-composer require laravel/boost --dev
+A estrutura foi pensada para garantir escalabilidade, legibilidade e facilidade de manutenção.
 
-php artisan boost:install
-```
+### 📁 Estrutura base (conceitual)
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+app/
+ ├── Actions/
+ ├── Http/
+ │    ├── Controllers/
+ │    ├── Requests/
+ ├── Services/
+ ├── UseCases/
+ ├── Helpers/
+ ├── Providers/
+ └── Domain/
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🧩 Padrões e Conceitos Utilizados
 
-## Code of Conduct
+### 1. ⚙️ Use Case Pattern (Camada de Caso de Uso)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Toda regra de negócio principal está encapsulada em **UseCases**, garantindo:
 
-## Security Vulnerabilities
+- Separação clara entre regras de negócio e camada HTTP
+- Código mais organizado e previsível
+- Facilidade de manutenção e evolução
+- Maior testabilidade da lógica de aplicação
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+📌 Responsabilidades típicas dos UseCases:
+- Processamento de dados de entrada
+- Regras de negócio principais
+- Orquestração de serviços
 
-## License
+👉 Benefício: isolamento completo da lógica de negócio em uma camada dedicada.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+### 2. 🧱 Service Layer (Camada de Serviços)
+
+A camada de Services é responsável por lidar com integrações e responsabilidades auxiliares, como:
+
+- Comunicação com APIs externas
+- Processamento de dados não pertencentes ao domínio principal
+- Reutilização de lógica transversal entre UseCases
+
+📌 Exemplos de Services:
+- Cliente HTTP para APIs externas
+- Integração com serviços de IA
+- Processadores auxiliares de dados
+
+👉 Benefício: desacoplamento entre regra de negócio e infraestrutura.
+
+---
+
+### 3. 🧰 Helpers
+
+Os Helpers foram utilizados apenas para funções utilitárias simples e globais, como:
+
+- Normalização de strings
+- Formatação de dados
+- Funções puramente auxiliares e reutilizáveis
+
+👉 Benefício: evita duplicação de código sem sobrecarregar Services.
+
+---
+
+### 4. 🎯 Controllers Magros (Thin Controllers)
+
+Os Controllers foram mantidos leves e com responsabilidade única:
+
+- Receber requisição HTTP
+- Validar entrada quando necessário
+- Delegar execução para UseCases
+
+👉 Nenhuma regra de negócio é implementada diretamente nos Controllers.
+
+---
+
+### 5. 🔄 Injeção de Dependência
+
+O projeto utiliza fortemente o container de Inversão de Controle do Laravel:
+
+- Facilita testes unitários
+- Permite substituição de implementações
+- Reduz acoplamento entre classes
+
+---
+
+### 6. 🧪 Testabilidade
+
+A arquitetura foi pensada para facilitar testes automatizados:
+
+- UseCases isolados e independentes
+- Services facilmente mockáveis
+- Fluxo de execução previsível
+
+Isso permite:
+
+- Unit tests
+- Feature tests
+- Testes com dependências simuladas
+
+---
+
+## 🧠 Fluxo da Aplicação
+
+Frontend (Vue.js)
+   ↓
+Controller (Laravel)
+   ↓
+Validação da Request
+   ↓
+UseCase (Regra de Negócio)
+   ↓
+Service Layer (Integrações externas)
+   ↓
+Resposta estruturada
+   ↓
+Frontend
+
+---
+
+## 🧱 Boas Práticas Aplicadas
+
+- ✔ Separação de responsabilidades (SRP)
+- ✔ Código desacoplado e modular
+- ✔ Baixo acoplamento entre camadas
+- ✔ Alta coesão nas classes
+- ✔ Estrutura preparada para escalabilidade
+- ✔ Código orientado à manutenção
+- ✔ Reutilização inteligente de lógica
+
+---
+
+## 🚀 Objetivo Técnico do Projeto
+
+Este projeto foi estruturado com foco em demonstrar:
+
+- Capacidade de construir arquiteturas escaláveis com Laravel
+- Conhecimento de padrões modernos de backend
+- Organização profissional de código
+- Pensamento orientado à produção
+- Boas práticas de engenharia de software
+
+---
+
+## 📈 Diferenciais Técnicos
+
+- Separação clara entre camadas da aplicação
+- Uso de Use Cases para centralização da lógica de negócio
+- Abstração de integrações externas via Services
+- Controllers enxutos e organizados
+- Estrutura pronta para crescimento modular
+- Alta previsibilidade de manutenção e evolução
+
+---
+
+## 🧾 Considerações Finais
+
+Este projeto foi desenvolvido com foco em qualidade de engenharia de software, priorizando:
+
+Clareza, manutenção e escalabilidade acima de atalhos de implementação.
+
+A arquitetura adotada reflete um padrão próximo de aplicações reais em produção.
+
+---
+
+## 👨‍💻 Autor
+
+Danilo Oliveira
