@@ -4,6 +4,199 @@ Este projeto foi desenvolvido como parte de um **desafio técnico de avaliação
 
 O objetivo principal não é apenas entregar uma solução funcional, mas sim demonstrar um **código limpo, modular, testável e de fácil manutenção**, simulando um ambiente real de produção.
 
+# ⚙️ Instalação e Execução
+
+## 📋 Pré-requisitos
+
+Antes de iniciar, certifique-se de possuir os seguintes softwares instalados:
+
+* PHP 8.4+
+* Composer
+* Node.js 20+
+* NPM
+* MySQL ou PostgreSQL
+* Docker Desktop (opcional, para execução com Laravel Sail)
+
+---
+
+## 📥 Clonando o Projeto
+
+```bash
+git clone https://github.com/seu-usuario/seu-repositorio.git
+
+cd seu-repositorio
+```
+
+---
+
+## 📦 Instalando Dependências
+
+### Dependências PHP
+
+```bash
+composer install
+```
+
+### Dependências Frontend
+
+```bash
+npm install
+```
+
+---
+
+## ⚙️ Configuração do Ambiente
+
+Crie o arquivo `.env` a partir do exemplo disponibilizado:
+
+```bash
+cp .env.example .env
+```
+
+Configure as variáveis de ambiente necessárias, principalmente:
+
+```env
+APP_NAME=UGC Challenge
+APP_ENV=local
+APP_DEBUG=true
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nome_do_banco
+DB_USERNAME=usuario
+DB_PASSWORD=senha
+```
+
+---
+
+## 🔑 Gerando a Chave da Aplicação
+
+```bash
+php artisan key:generate
+```
+
+---
+
+# 🚀 Executando o Projeto
+
+## Opção 1 — Ambiente Local
+
+### Backend Laravel
+
+```bash
+php artisan serve
+```
+
+A aplicação ficará disponível em:
+
+```text
+http://localhost:8000
+```
+
+### Frontend Vue.js (Vite)
+
+Em outro terminal execute:
+
+```bash
+npm run dev
+```
+
+O Vite iniciará o servidor de desenvolvimento do frontend.
+
+---
+
+## Opção 2 — Utilizando Laravel Sail
+
+Caso o projeto esteja configurado com Laravel Sail:
+
+### Inicializar containers
+
+```bash
+./vendor/bin/sail up -d
+```
+
+Ou:
+
+```bash
+sail up -d
+```
+
+### Executar migrações
+
+```bash
+./vendor/bin/sail artisan migrate
+```
+
+### Executar seeders
+
+```bash
+./vendor/bin/sail artisan db:seed
+```
+
+### Rodar o frontend
+
+```bash
+./vendor/bin/sail npm install
+
+./vendor/bin/sail npm run dev
+```
+
+## 🛠️ Comandos Úteis
+
+### Limpar cache da aplicação
+
+```bash
+php artisan optimize:clear
+```
+
+### Limpar cache de configuração
+
+```bash
+php artisan config:clear
+```
+
+### Limpar cache de rotas
+
+```bash
+php artisan route:clear
+```
+
+### Limpar cache de views
+
+```bash
+php artisan view:clear
+```
+
+---
+
+## 📚 Tecnologias Utilizadas
+
+### Backend
+
+* Laravel
+* PHP 8+
+* Composer
+
+### Frontend
+
+* Vue.js
+* Vite
+* JavaScript
+
+### Banco de Dados
+
+* MySQL / PostgreSQL
+
+### Ambiente
+
+* Docker
+* Laravel Sail
+
+---
+
+Após concluir os passos acima, a aplicação estará pronta para uso em ambiente de desenvolvimento.
+
 ---
 
 ## 📌 Sobre o Projeto
@@ -33,12 +226,9 @@ app/
  ├── Actions/
  ├── Http/
  │    ├── Controllers/
- │    ├── Requests/
  ├── Services/
  ├── UseCases/
  ├── Helpers/
- ├── Providers/
- └── Domain/
 
 ---
 
